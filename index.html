@@ -103,14 +103,18 @@ function startScanner() {
 
     function(decodedText) {
 
-      document.getElementById("result").innerHTML =
-        "✅ QR berjaya dibaca:<br><br><strong>" +
-        decodedText +
-        "</strong>";
+  document.getElementById("result").innerHTML =
+    "🔎 Mencari data murid...";
 
-      scanner.stop();
+  scanner.stop();
 
-    },
+  const url =
+    "https://script.google.com/macros/s/AKfycbzD35NbmYGtkAYd08V23o119VJ3h-4VFqA2lBjgjtKQByFo7wy2YyFi1g04pri-EXA8cw/exec?id=" +
+    encodeURIComponent(decodedText);
+
+  window.location.href = url;
+
+},
 
     function(errorMessage) {
       // Abaikan ketika scanner sedang mencari QR
