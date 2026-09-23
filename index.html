@@ -1,10 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Scanner Asrama SK Telanok</title>
+
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .header {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .button {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 16px;
+      background: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #reader {
+      margin-top: 20px;
+    }
+
+    #result {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Scanner Asrama SK Telanok</h1>
-  <p>Scanner sedang dibina.</p>
+
+<div class="container">
+
+  <div class="header">
+    <h1>ASRAMA SK TELANOK</h1>
+    <p>QR Scanner</p>
+  </div>
+
+  <button class="button" onclick="startScanner()">
+    📷 SCAN QR
+  </button>
+
+  <div id="reader"></div>
+
+  <div id="result">
+    Belum ada QR diimbas.
+  </div>
+
+</div>
+
+<script>
+
+let scanner = null;
+
+function startScanner() {
+
+  document.getElementById("result").innerHTML =
+    "📷 Membuka kamera...";
+
+  scanner = new Html5Qrcode("reader");
+
+  scanner.start(
+    { facingMode: "environment" },
+
+    {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+    },
+
+    function(decodedText) {
+
+      document.getElementById("result").innerHTML =
+        "✅ QR berjaya dibaca:<br><br><strong>" +
+        decodedText +
+        "</strong>";
+
+      scanner.stop();
+
+    },
+
+    function(errorMessage) {
+      // Abaikan ketika scanner sedang mencari QR
+    }
+
+  ).catch(function(error) {
+
+    document.getElementById("result").innerHTML =
+      "❌ Kamera tidak dapat dibuka.<br><br>" +
+      error;
+
+  });
+
+}
+
+</script>
+
 </body>
 </html>
